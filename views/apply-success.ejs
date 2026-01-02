@@ -1,0 +1,29 @@
+<%- include('partials/shell-top', { title: title }) %>
+<section class="container success-page">
+  <div class="success-card">
+    <div class="success-mark">报名成功</div>
+    <h1>您的报名已提交</h1>
+    <p>
+      报名编号：<strong>#<%= application.id %></strong>，请保存此编号或通过手机号与身份证号查询进度。
+    </p>
+    <div class="success-steps">
+      <div>
+        <span>1</span>
+        后台筛选中
+      </div>
+      <div>
+        <span>2</span>
+        发布笔试通知
+      </div>
+      <div>
+        <span>3</span>
+        发布面试通知
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a class="btn primary" href="/status">查询报名进度</a>
+      <a class="btn ghost" href="/">返回首页</a>
+    </div>
+  </div>
+</section>
+<%- include('partials/shell-bottom') %>

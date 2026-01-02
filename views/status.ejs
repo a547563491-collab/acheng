@@ -1,0 +1,76 @@
+<%- include('partials/shell-top', { title: title }) %>
+<section class="container form-page">
+  <div class="form-header">
+    <h1>报名进度查询</h1>
+    <p>请输入报名时的手机号与身份证号码查询最新状态。</p>
+  </div>
+
+  <% if (errors.length) { %>
+  <div class="form-errors">
+    <div class="form-errors-title">请确认以下信息：</div>
+    <ul>
+      <% errors.forEach((err) => { %>
+      <li><%= err %></li>
+      <% }) %>
+    </ul>
+  </div>
+  <% } %>
+
+  <form class="form-card" method="POST" action="/status">
+    <div class="form-grid two-col">
+      <label>
+        <span>手机号</span>
+        <input type="tel" name="phone" placeholder="11位手机号" required />
+      </label>
+      <label>
+        <span>身份证号码</span>
+        <input type="text" name="idNumber" placeholder="18位身份证号" required />
+      </label>
+    </div>
+    <div class="form-actions">
+      <button class="btn primary" type="submit">查询进度</button>
+      <a class="btn ghost" href="/apply">我要报名</a>
+    </div>
+  </form>
+
+  <% if (result) { %>
+  <div class="status-card">
+    <div class="status-header">
+      <h2>当前状态：<%= statusLabels[result.application.status] %></h2>
+      <p><%= statusDescriptions[result.application.status] %></p>
+    </div>
+    <div class="status-body">
+      <div>
+        <div class="label">报名编号</div>
+        <div>#<%= result.application.id %></div>
+      </div>
+      <div>
+        <div class="label">姓名</div>
+        <div><%= result.application.name %></div>
+      </div>
+      <div>
+        <div class="label">提交时间</div>
+        <div><%= new Date(result.application.createdAt).toLocaleString() %></div>
+      </div>
+    </div>
+    <div class="status-notifications">
+      <h3>通知记录</h3>
+      <% if (result.notifications.length === 0) { %>
+      <p>暂无通知，请耐心等待。</p>
+      <% } else { %>
+      <ul>
+        <% result.notifications.forEach((notice) => { %>
+        <li>
+          <div class="notice-time">
+            <%= new Date(notice.sentAt).toLocaleString() %>
+          </div>
+          <div class="notice-content"><%= notice.content %></div>
+        </li>
+        <% }) %>
+      </ul>
+      <% } %>
+    </div>
+  </div>
+  <% } %>
+</section>
+<%- include('partials/shell-bottom') %>

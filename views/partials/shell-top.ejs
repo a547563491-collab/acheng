@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <% const bodyClassSafe = typeof bodyClass !== "undefined" ? bodyClass : ""; %>
+  <body class="<%= bodyClassSafe %>">
+    <div class="background-orb orb-one" aria-hidden="true"></div>
+    <div class="background-orb orb-two" aria-hidden="true"></div>
+    <div class="background-grid" aria-hidden="true"></div>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="/">
+          <span class="brand-mark">辅警</span>
+          <span class="brand-text">招聘报名平台</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">首页</a>
+          <a href="/apply" class="<%= currentPath === '/apply' ? 'active' : '' %>"
+            >个人报名</a
+          >
+          <a
+            href="/status"
+            class="<%= currentPath === '/status' ? 'active' : '' %>"
+            >进度查询</a
+          >
+          <% if (isAdmin) { %>
+          <a
+            href="/admin/applications"
+            class="<%= currentPath.startsWith('/admin') ? 'active' : '' %>"
+            >管理后台</a
+          >
+          <% } %>
+        </nav>
+      </div>
+    </header>
+    <main class="site-main">
+      <% if (flash) { %>
+      <div class="container">
+        <div class="flash flash-<%= flash.type %>"><%= flash.message %></div>
+      </div>
+      <% } %>

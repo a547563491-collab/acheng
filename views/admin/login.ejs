@@ -1,0 +1,31 @@
+<%- include('../partials/shell-top', { title: title, bodyClass: 'page-admin-login' }) %>
+<section class="container form-page">
+  <div class="form-header">
+    <h1>后台登录</h1>
+    <p>请输入管理员账号进入报名管理后台。</p>
+  </div>
+
+  <% if (error) { %>
+  <div class="form-errors">
+    <div class="form-errors-title"><%= error %></div>
+  </div>
+  <% } %>
+
+  <form class="form-card" method="POST" action="/admin/login">
+    <div class="form-grid two-col">
+      <label>
+        <span>账号</span>
+        <input type="text" name="username" required />
+      </label>
+      <label>
+        <span>密码</span>
+        <input type="password" name="password" required />
+      </label>
+    </div>
+    <div class="form-actions">
+      <button class="btn primary" type="submit">登录</button>
+      <a class="btn ghost" href="/">返回首页</a>
+    </div>
+  </form>
+</section>
+<%- include('../partials/shell-bottom') %>

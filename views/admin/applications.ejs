@@ -1,0 +1,79 @@
+<%- include('../partials/shell-top', { title: title, bodyClass: 'page-admin' }) %>
+<section class="container admin-header">
+  <div>
+    <h1>报名管理</h1>
+    <p>查看报名信息并筛选、发布通知。</p>
+  </div>
+  <form class="admin-logout" method="POST" action="/admin/logout">
+    <button class="btn ghost" type="submit">退出登录</button>
+  </form>
+</section>
+
+<section class="container admin-stats">
+  <div class="stat-chip">总报名 <strong><%= stats.total %></strong></div>
+  <div class="stat-chip">待筛选 <strong><%= stats.pending %></strong></div>
+  <div class="stat-chip"><%= statusLabels.written %> <strong><%= stats.written %></strong></div>
+  <div class="stat-chip"><%= statusLabels.interview %> <strong><%= stats.interview %></strong></div>
+  <div class="stat-chip">拟录用 <strong><%= stats.pass %></strong></div>
+</section>
+
+<section class="container admin-filters">
+  <form class="filter-form" method="GET" action="/admin/applications">
+    <label>
+      <span>状态筛选</span>
+      <select name="status">
+        <option value="all" <%= status === 'all' ? 'selected' : '' %>>全部</option>
+        <option value="pending" <%= status === 'pending' ? 'selected' : '' %>>待筛选</option>
+        <option value="written" <%= status === 'written' ? 'selected' : '' %>><%= statusLabels.written %></option>
+        <option value="interview" <%= status === 'interview' ? 'selected' : '' %>><%= statusLabels.interview %></option>
+        <option value="pass" <%= status === 'pass' ? 'selected' : '' %>>拟录用</option>
+        <option value="reject" <%= status === 'reject' ? 'selected' : '' %>>未入选</option>
+      </select>
+    </label>
+    <label>
+      <span>关键词</span>
+      <input type="text" name="q" value="<%= query %>" placeholder="姓名/手机号/身份证" />
+    </label>
+    <button class="btn primary" type="submit">筛选</button>
+  </form>
+</section>
+
+<section class="container admin-table">
+  <% if (apps.length === 0) { %>
+  <div class="empty-state">暂无报名记录。</div>
+  <% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>姓名</th>
+          <th>手机号</th>
+          <th>提交时间</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% apps.forEach((app) => { %>
+        <tr>
+          <td>#<%= app.id %></td>
+          <td><%= app.name %></td>
+          <td><%= app.phone %></td>
+          <td><%= new Date(app.createdAt).toLocaleString() %></td>
+          <td>
+            <span class="status-pill status-<%= app.status %>">
+              <%= statusLabels[app.status] %>
+            </span>
+          </td>
+          <td>
+            <a class="btn tiny" href="/admin/applications/<%= app.id %>">查看</a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
+</section>
+<%- include('../partials/shell-bottom') %>

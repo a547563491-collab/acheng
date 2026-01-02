@@ -1,0 +1,60 @@
+<%- include('partials/shell-top', { title: title }) %>
+<section class="hero container">
+  <div class="hero-content">
+    <div class="eyebrow">辅警招聘报名服务平台</div>
+    <h1>公开报名、统一审核、通知发布。</h1>
+    <p class="hero-sub">
+      本平台仅用于报名登记与通知发布，招聘宣传与具体岗位信息以官方公告为准。
+    </p>
+    <div class="hero-actions">
+      <a class="btn primary" href="/apply">报名入口</a>
+      <a class="btn ghost" href="/status">进度查询</a>
+    </div>
+    <div class="hero-badges">
+      <div class="badge">短信校验</div>
+      <div class="badge">实名登记</div>
+      <div class="badge">统一通知</div>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="card-title">平台服务提示</div>
+    <div class="card-note">
+      报名提交后进入审核流程，笔试与面试通知将同步发布至短信与平台。
+    </div>
+    <div class="hero-badges">
+      <div class="badge">公开透明</div>
+      <div class="badge">统一审核</div>
+      <div class="badge">短信提醒</div>
+    </div>
+  </div>
+</section>
+
+<section class="container info-grid">
+  <div class="info-card" style="--delay: 0s">
+    <h3>报名须知</h3>
+    <ol>
+      <li>报名信息须真实准确，提交后进入审核流程。</li>
+      <li>请保持手机号畅通，通知将以短信发布。</li>
+      <li>如需更改信息，请及时联系管理单位。</li>
+    </ol>
+  </div>
+  <div class="info-card" style="--delay: 0.1s">
+    <h3>审核与通知</h3>
+    <p>审核结果将分阶段发布，包括笔试、面试与拟录用通知。</p>
+    <p>建议同时使用平台进度查询核对信息。</p>
+  </div>
+  <div class="info-card" style="--delay: 0.2s">
+    <h3>信息安全</h3>
+    <p>报名信息仅用于招聘审核与通知发布，严格保密。</p>
+    <p>平台采用实名校验与短信验证确保真实性。</p>
+  </div>
+</section>
+
+<section class="container callout">
+  <div>
+    <h2>报名通道已开放</h2>
+    <p>请在规定时间内完成报名登记，逾期将无法提交。</p>
+  </div>
+  <a class="btn primary" href="/apply">进入报名</a>
+</section>
+<%- include('partials/shell-bottom') %>

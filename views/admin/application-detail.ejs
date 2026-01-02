@@ -1,0 +1,112 @@
+<%- include('../partials/shell-top', { title: title, bodyClass: 'page-admin' }) %>
+<section class="container admin-header">
+  <div>
+    <h1>报名详情 #<%= application.id %></h1>
+    <p>查看详细信息并更新状态。</p>
+  </div>
+  <div class="admin-actions">
+    <a class="btn ghost" href="/admin/applications">返回列表</a>
+    <form class="inline" method="POST" action="/admin/logout">
+      <button class="btn ghost" type="submit">退出登录</button>
+    </form>
+  </div>
+</section>
+
+<section class="container detail-grid">
+  <div class="detail-card">
+    <h2>报名信息</h2>
+    <dl>
+      <div>
+        <dt>姓名</dt>
+        <dd><%= application.name %></dd>
+      </div>
+      <div>
+        <dt>手机号</dt>
+        <dd><%= application.phone %></dd>
+      </div>
+      <div>
+        <dt>身份证号</dt>
+        <dd><%= application.idNumber %></dd>
+      </div>
+      <div>
+        <dt>户籍所在地</dt>
+        <dd><%= application.region || '未填写' %></dd>
+      </div>
+      <div>
+        <dt>最高学历</dt>
+        <dd><%= application.education || '未填写' %></dd>
+      </div>
+      <div>
+        <dt>专业方向</dt>
+        <dd><%= application.major || '未填写' %></dd>
+      </div>
+      <div>
+        <dt>相关经历</dt>
+        <dd><%= application.experience || '未填写' %></dd>
+      </div>
+      <div>
+        <dt>备注</dt>
+        <dd><%= application.note || '未填写' %></dd>
+      </div>
+      <div>
+        <dt>提交时间</dt>
+        <dd><%= new Date(application.createdAt).toLocaleString() %></dd>
+      </div>
+      <% if (application.updatedAt) { %>
+      <div>
+        <dt>更新时间</dt>
+        <dd><%= new Date(application.updatedAt).toLocaleString() %></dd>
+      </div>
+      <% } %>
+    </dl>
+  </div>
+
+  <div class="detail-card">
+    <h2>更新状态</h2>
+    <form method="POST" action="/admin/applications/<%= application.id %>/status">
+      <label>
+        <span>当前状态</span>
+        <select name="status" required>
+          <option value="pending" <%= application.status === 'pending' ? 'selected' : '' %>>待筛选</option>
+          <option value="written" <%= application.status === 'written' ? 'selected' : '' %>>笔试通知</option>
+          <option value="interview" <%= application.status === 'interview' ? 'selected' : '' %>>面试通知</option>
+          <option value="pass" <%= application.status === 'pass' ? 'selected' : '' %>>拟录用</option>
+          <option value="reject" <%= application.status === 'reject' ? 'selected' : '' %>>未入选</option>
+        </select>
+      </label>
+      <label>
+        <span>通知内容</span>
+        <textarea
+          name="message"
+          rows="4"
+          placeholder="填写通知内容，选填"
+        ></textarea>
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" name="sendSms" checked />
+        <span>同步发送短信（模拟）</span>
+      </label>
+      <div class="form-actions">
+        <button class="btn primary" type="submit">保存并发送</button>
+      </div>
+      <p class="form-tip">如不填写通知内容，仅更新状态。</p>
+    </form>
+  </div>
+</section>
+
+<section class="container detail-card">
+  <h2>通知记录</h2>
+  <% if (notifications.length === 0) { %>
+  <p>暂无通知记录。</p>
+  <% } else { %>
+  <ul class="notice-list">
+    <% notifications.forEach((notice) => { %>
+    <li>
+      <div class="notice-time"><%= new Date(notice.sentAt).toLocaleString() %></div>
+      <div class="notice-content"><%= notice.content %></div>
+    </li>
+    <% }) %>
+  </ul>
+  <% } %>
+</section>
+<%- include('../partials/shell-bottom') %>

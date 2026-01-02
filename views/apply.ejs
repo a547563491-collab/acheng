@@ -1,0 +1,118 @@
+<% const pageScript = "/js/apply.js"; %>
+<%- include('partials/shell-top', { title: title, bodyClass: 'page-apply' }) %>
+<section class="container form-page">
+  <div class="form-header">
+    <h1>个人报名登记</h1>
+    <p>请填写真实信息，报名通过后可在平台查询后续通知。</p>
+  </div>
+
+  <% if (errors.length) { %>
+  <div class="form-errors">
+    <div class="form-errors-title">请完善以下信息：</div>
+    <ul>
+      <% errors.forEach((err) => { %>
+      <li><%= err %></li>
+      <% }) %>
+    </ul>
+  </div>
+  <% } %>
+
+  <form class="form-card" method="POST" action="/apply">
+    <div class="form-grid">
+      <label>
+        <span>姓名</span>
+        <input type="text" name="name" value="<%= form.name || '' %>" required />
+      </label>
+      <label>
+        <span>手机号</span>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          value="<%= form.phone || '' %>"
+          placeholder="11位手机号"
+          required
+        />
+      </label>
+      <label class="sms-field">
+        <span>短信验证码</span>
+        <div class="sms-row">
+          <input
+            type="text"
+            name="smsCode"
+            value="<%= form.smsCode || '' %>"
+            placeholder="6位验证码"
+            required
+          />
+          <button class="btn ghost" type="button" id="send-code">
+            获取验证码
+          </button>
+        </div>
+        <div id="sms-feedback" class="sms-feedback" role="status"></div>
+      </label>
+      <label>
+        <span>身份证号码</span>
+        <input
+          type="text"
+          name="idNumber"
+          value="<%= form.idNumber || '' %>"
+          placeholder="18位身份证号"
+          required
+        />
+      </label>
+      <label>
+        <span>户籍所在地</span>
+        <input
+          type="text"
+          name="region"
+          value="<%= form.region || '' %>"
+          placeholder="如：山东省济南市"
+        />
+      </label>
+      <label>
+        <span>最高学历</span>
+        <input
+          type="text"
+          name="education"
+          value="<%= form.education || '' %>"
+          placeholder="如：本科"
+        />
+      </label>
+      <label>
+        <span>专业方向</span>
+        <input
+          type="text"
+          name="major"
+          value="<%= form.major || '' %>"
+          placeholder="如：治安管理"
+        />
+      </label>
+      <label>
+        <span>相关经历</span>
+        <input
+          type="text"
+          name="experience"
+          value="<%= form.experience || '' %>"
+          placeholder="如：退伍、辅警经历"
+        />
+      </label>
+      <label class="full-width">
+        <span>备注</span>
+        <textarea name="note" rows="4" placeholder="可填写补充说明"><%= form.note || '' %></textarea>
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn primary" type="submit">提交报名</button>
+      <a class="btn ghost" href="/status">已有报名？查询进度</a>
+    </div>
+    <div class="form-tip">
+      <% if (smsDebug) { %>
+      提示：当前为演示模式，短信验证码将以提示信息展示。
+      <% } else { %>
+      提示：验证码5分钟内有效，请及时填写。
+      <% } %>
+    </div>
+  </form>
+</section>
+<%- include('partials/shell-bottom', { pageScript }) %>
